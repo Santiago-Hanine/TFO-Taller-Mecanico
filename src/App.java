@@ -3,6 +3,7 @@ import java.time.LocalDate;
 
 import dominio.cliente.Cliente;
 import dominio.empleado.Mecanico;
+import dominio.empleado.Nivel;
 import dominio.orden.EstadoOT;
 import dominio.orden.ItemRepuesto;
 import dominio.orden.LineaServicio;
@@ -21,7 +22,7 @@ public class App {
 		EstadoOT estado = EstadoOT.EN_PROCESO;
 		Prioridad prioridad = Prioridad.ALTA;
 
-		Mecanico mecanico = new Mecanico(01, "Camionetas", 30);
+		Mecanico mecanico = new Mecanico(01, "Camionetas", 30.00,Nivel.JUNIOR);
 		OrdenDeTrabajo orden = new OrdenDeTrabajo(1, LocalDate.now(), estado, "El diagnostico prueba", prioridad,
 				mecanico, 3);
 		vehiculo.agregarOrdenDeTrabajo(orden);
@@ -31,5 +32,14 @@ public class App {
 		orden.calcularCostoTotal();
 
 		System.out.println("Costo total de la orden: " + orden.calcularCostoTotal());
+		System.out.println("Repuestos de la orden:");
+		for (ItemRepuesto repuesto : orden.getRepuestos()) {
+		    System.out.println("- " + repuesto.getDescripcion() + 
+		                       " | Cantidad: " + repuesto.getCantidad() + 
+		                       " | Precio unitario: $" + repuesto.getPrecioUnitario() + 
+		                       " | Subtotal: $" + repuesto.subTotal());
+		}
+
+
 	}
 }

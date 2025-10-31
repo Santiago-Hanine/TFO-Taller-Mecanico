@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch App (prebuild)",
+      "request": "launch",
+      "mainClass": "App",
+      "preLaunchTask": "javac: build src",
+      "classPaths": [
+        "${workspaceFolder}/out"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "Run App (no prebuild)",
+      "request": "launch",
+      "mainClass": "App",
+      "classPaths": [
+        "${workspaceFolder}/out"
+      ]
+    }
+  ]
+}

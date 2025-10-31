@@ -1,37 +1,22 @@
 package dominio.empleado;
 
 public class Mecanico extends Empleado {
-	private String especialidad;
-	private double salario;
+    private String especialidad;
+    private double salarioMensual;
+    private Nivel nivel;
 
-	public Mecanico(int legajo, String especialidad, double salario) {
-		super(legajo);
-		this.especialidad = especialidad;
-		this.salario = salario;
-	}
+    public Mecanico(int legajo, String especialidad, double salarioMensual, Nivel nivel) {
+        super(legajo);
+        this.especialidad = especialidad;
+        this.salarioMensual = salarioMensual;
+        this.nivel = nivel;
+    }
 
-	@Override
-	public double calcularTarifaHora(float horas, double salario) {
-		if (horas == 0) {
-			throw new IllegalArgumentException("Las horas no pueden ser cero.");
-		}
-		return salario / horas;
-	}
+    @Override
+    public double tarifaHora() {
+        double base = salarioMensual / 160.0; // simple: 160 hs/mes
+        return base * nivel.factor();
+    }
 
-	public String getEspecialidad() {
-		return especialidad;
-	}
-
-	public void setEspecialidad(String especialidad) {
-		this.especialidad = especialidad;
-	}
-
-	public double getSalario() {
-		return salario;
-	}
-
-	public void setSalario(double salario) {
-		this.salario = salario;
-	}
-
+    // getters/setters mínimos si los necesitás
 }

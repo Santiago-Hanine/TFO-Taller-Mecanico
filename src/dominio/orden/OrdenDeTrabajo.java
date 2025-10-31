@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.empleado.Mecanico;
+import dominio.excepciones.RepuestoDuplicadoException;
 
 public class OrdenDeTrabajo implements Facturable {
+	public static final double IVA = 0.21;
 	private int numeroOrden;
 	private LocalDate fechaIngreso;
 	private EstadoOT estado;
@@ -28,6 +30,11 @@ public class OrdenDeTrabajo implements Facturable {
 		this.repuestos = new ArrayList<>();
 		this.servicios = new ArrayList<>();
 		this.horasTrabajadas = horasTrabajadas;
+	}
+
+	public OrdenDeTrabajo(int nro, LocalDate fecha, EstadoOT estado2, String diag, Prioridad pr, Object object,
+			Object object2, double horas) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getNumeroOrden() {
@@ -79,28 +86,30 @@ public class OrdenDeTrabajo implements Facturable {
 	}
 
 	@Override
-	public double calcularCostoTotal() {
-		double total = 0;
-
-		for (ItemRepuesto itemRepuesto : repuestos) {
-			total += itemRepuesto.subTotal();
-		}
-		for (LineaServicio lineaServicio : servicios) {
-			lineaServicio
-					.setTarifaHora(this.asignadoA.calcularTarifaHora(this.horasTrabajadas, asignadoA.getSalario()));
-			total += lineaServicio.subTotal();
-		}
-
-		return total;
-
+    public double calcularCostoTotal() {
+        double rep = repuestos.stream().mapToDouble(ItemRepuesto::calcularCostoTotal).sum();
+        double serv = servicios.stream().mapToDouble(LineaServicio::calcularCostoTotal).sum();
+        double neto = rep + serv;
+        return neto * (1 + IVA);
 	}
-
-	public void agregarRepuesto(ItemRepuesto itemRepuesto) {
-		this.repuestos.add(itemRepuesto);
+	
+	public void agregarRepuesto(ItemRepuesto r) throws RepuestoDuplicadoException {
+	    boolean existe = repuestos.stream().anyMatch(x -> x.getCodigo().equals(r.getCodigo()));
+	    if (existe) throw new RepuestoDuplicadoException("Repuesto ya agregado: " + r.getCodigo());
+	    repuestos.add(r);
 	}
 
 	public void agregarServicio(LineaServicio lineaServicio) {
 		this.servicios.add(lineaServicio);
 	}
+	public List<ItemRepuesto> getRepuestos() {
+	    return repuestos;
+	}
+
+	public float getHorasTrabajadas() {
+		// TODO Auto-generated method stub
+		return horasTrabajadas;
+	}
+
 
 }
