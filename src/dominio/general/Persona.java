@@ -1,17 +1,18 @@
 package dominio.general;
 
 public abstract class Persona {
+    private static int contador = 0;
 	private int id;
 	private String nombre;
 	private int edad;
 	private int telefono;
 
-	public Persona(String nombre, int edad, int telefono, int id) {
+	public Persona(String nombre, int edad, int telefono) {
 		this.nombre = nombre;
 		this.edad = edad;
 		this.telefono = telefono;
-		this.id = id;
-	}
+        this.id = ++contador;
+    }
 
 	public String getNombre() {
 		return nombre;
