@@ -10,8 +10,8 @@ public class Cliente extends Persona implements Notificable {
 	private String email;
 	private List<Vehiculo> vehiculos;
 
-	public Cliente(String nombre, int edad, int telefono, int id, String email) {
-		super(nombre, edad, telefono, id);
+	public Cliente(String nombre, int edad, int telefono, String email) {
+		super(nombre, edad, telefono);
 		this.email = email;
 		this.vehiculos = new ArrayList<>();
 	}
