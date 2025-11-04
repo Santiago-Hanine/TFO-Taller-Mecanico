@@ -1,6 +1,6 @@
-package dominio.orden;
+	package dominio.orden;
 
-public class LineaServicio {
+public class LineaServicio implements Facturable {
 	private String descripcion;
 	private double horas;
 	private double tarifaHora;
@@ -34,8 +34,12 @@ public class LineaServicio {
 	public void setTarifaHora(double tarifaHora) {
 		this.tarifaHora = tarifaHora;
 	}
-
-	public double subTotal() {
+	@Override 
+	public double calcularCostoTotal() { 
 		return this.horas * this.tarifaHora;
 	}
+	public double subTotal() {
+		return calcularCostoTotal();
+	}
+	
 }

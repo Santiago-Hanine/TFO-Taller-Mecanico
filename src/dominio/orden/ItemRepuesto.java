@@ -1,6 +1,6 @@
 package dominio.orden;
 
-public class ItemRepuesto {
+public class ItemRepuesto implements Facturable {
 	private String codigo;
 	private String descripcion;
 	private int cantidad;
@@ -45,11 +45,14 @@ public class ItemRepuesto {
 		this.precioUnitario = precioUnitario;
 	}
 
-	private double calcularSubTotal() {
-		return this.cantidad * this.precioUnitario;
+	
+	@Override 
+	 public double calcularCostoTotal() { 
+		 return this.cantidad * this.precioUnitario; 
 	}
-
+	
 	public double subTotal() {
-		return calcularSubTotal();
+		return calcularCostoTotal();
 	}
+	 
 }
